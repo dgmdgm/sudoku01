@@ -19,7 +19,7 @@
     <priority value ="error" />
     <!--<priority value ="all" />-->
     <appender-ref ref="console" />
-    <appender-ref ref="socket" />
+    <!--<appender-ref ref="socket" />-->
   </root>
   
 </log4j:configuration>
