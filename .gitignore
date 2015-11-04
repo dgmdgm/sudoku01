@@ -1,1 +1,4 @@
+# Maven build output
 target/
+# IntelliJ local config
+*.iws
