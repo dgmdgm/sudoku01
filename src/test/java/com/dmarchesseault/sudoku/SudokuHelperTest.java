@@ -256,7 +256,7 @@ public class SudokuHelperTest
         final int[] pCol = pair.getValue();
 
         //todo apply transform to board and compare results
-        Assert.fail("Test implementation incomplete");
+        Assert.fail("TEST NOT IMPLEMENTED");
 
 //            Assert.assertTrue("s=" + Arrays.toString(source) + ", t=" + Arrays.toString(target) + ", p=" + Arrays.toString(expected),
 //                    Arrays.equals(expected, SudokuHelper.findPermutation(source, target)));
@@ -296,7 +296,7 @@ public class SudokuHelperTest
             }
         }
 
-        Assert.fail("Test implementation incomplete");
+        Assert.fail("TEST NOT IMPLEMENTED");
     }
 
     @Test
@@ -373,7 +373,7 @@ public class SudokuHelperTest
         // Speculating that there may be a partition of the universal set of board
         // We should try multiple boards to see if we can determine a small partition.
 
-        Assert.fail("Test implementation incomplete");
+        Assert.fail("TEST NOT IMPLEMENTED");
     }
 
 
@@ -393,7 +393,7 @@ public class SudokuHelperTest
     }
 
 
-    @Test
+    @Test/**/
     public void test_makeRowPermutation_2()
     {
         // It is possible that the permutation will be the identity one. There is a chance in 9!.
@@ -402,7 +402,7 @@ public class SudokuHelperTest
 
         // Create n permutations
         final int n = 3;
-        final int[][] perms = new int[n][];
+        final int[][] perms = new int[n][];/**/
         for (int i = 0; i < n; i++) {
             final int[] perm = SudokuHelper.makeRowPermutation(i);
             Assert.assertEquals("should be the same size as board", 9, perm.length);
