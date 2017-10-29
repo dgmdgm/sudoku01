@@ -1,0 +1,47 @@
+Notes on migration from Java to JavaScript
+
+ISSUES
+
+Missing js equivalents to java
+- package
+- import
+- import order
+- class declaration
+- extends
+- implements
+- static members
+  property of constructor for access from outside
+  property of prototype for direct access from instance?
+  initialized only once
+- static methods
+- call to super
+- constructor using method defined later in the script
+- multiple constructors
+  detect arguments
+- collection classes
+- logger classes
+- unit tests
+- final
+
+
+LESSONS
+
+- Java == usually translates to JS ===, same for != vs !==
+- Java v!=null may be rendered as JS v!=null which works with both null and undefined.
+- JS access to member x requires this.x
+- JS default value is undefined and not some other appropriate default like null or 0.- No integer division. Must wrap expression with Math.floor()
+- Functions are undefined until the script executes the creation code.
+  Put initialization (e.g. class variables) that call them a the end
+- JS does not support function name overloading
+  Best to replace the java overloaded names with separate names before migration
+  In some case, the JS function can handle teh varaible arg list.
+  A no-arg function can analyse the args and dispatch to other renamed methods.
+- The JS for-in iterates on keys not values.
+  To translate a java for(elem : collection){...} loop, we can use a js forEach but the function
+  called on each element makes it harder to debug and hides the this pointer.
+  It is easier to do somethign like
+    for(key in coll) {let elem = coll[key[; ...}
+- JS has no true long int type. It is limited to the
+- JS try-catch cannot distinguish the exxception type.
+  You have to catch everything then test the exception you want and throw the rest.
+- Follow Google style guide for var_args as as marker arg name

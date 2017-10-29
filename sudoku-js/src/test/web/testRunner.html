@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unit Test Runner</title>
+    <script src="../../main/js/module/Module.js"></script>
+    <script src="../../main/js/lang/Exception.js"></script>
+    <script src="../../main/js/lang/IllegalArgumentException.js"></script>
+    <script src="../../main/js/lang/IllegalStateException.js"></script>
+    <script src="../../main/js/lang/IndexOutOfBoundsException.js"></script>
+    <script src="../../main/js/lang/NotInstantiableException.js"></script>
+    <script src="../../main/js/util/Logger.js"></script>
+    <script src="../../main/js/util/Deque.js"></script>
+    <script src="../../main/js/util/Set.js"></script>
+    <script src="../../main/js/tools/StopWatch.js"></script>
+    <script src="../../main/js/sudoku/SudokuConstants.js"></script>
+    <script src="../../main/js/sudoku/BoardSanityException.js"></script>
+    <script src="../../main/js/sudoku/SudokuHelper.js"></script>
+    <script src="../../main/js/sudoku/CellState.js"></script>
+    <script src="../../main/js/sudoku/CellChange.js"></script>
+    <script src="../../main/js/sudoku/Cell.js"></script>
+    <script src="../../main/js/sudoku/SudokuSamples.js"></script>
+    <script src="../../main/js/sudoku/SudokuHelper.js"></script>
+    <script src="../../main/js/sudoku/SolverStrategyScan.js"></script>
+    <script src="../../main/js/sudoku/SolverStrategySearch.js"></script>
+    <script src="../../main/js/sudoku/SolverStrategyComposite.js"></script>
+    <script src="../../main/js/sudoku/Board.js"></script>
+
+    <script src="../js/test/FailedAssertionException.js"></script>
+    <script src="../js/test/Assert.js"></script>
+    <script src="../js/test/TestCase.js"></script>
+    <script src="../js/test/TestSuite.js"></script>
+    <script src="../js/lang/ExceptionTest.js"></script>
+    <script src="../js/sudoku/SudokuHelperTest.js"></script>
+    <script src="../js/sudoku/CellStateTest.js"></script>
+    <script src="../js/sudoku/CellTest.js"></script>
+    <script src="../js/sudoku/SolverStrategyScanTest.js"></script>
+    <script src="../js/sudoku/SolverStrategySearchTest.js"></script>
+    <script src="../js/sudoku/SolverStrategyCompositeTest.js"></script>
+    <script src="../js/sudoku/BoardTest.js"></script>
+
+</head>
+<body>
+<b>Unit tests</b>
+<div id="tests">
+    <div><span>Name: </span><span id="scoreName">?</span></div>
+    <div><span>Skipped: </span><span id="scoreSkipped">0</span></div>
+    <div><span>Success: </span><span id="scoreSuccess">0</span></div>
+    <div><span>Failure: </span><span id="scoreFailure">0</span></div>
+    <div><span>Error: </span><span id="scoreError">0</span></div>
+    <div><span>Elapsed ms: </span><span id="scoreElapsed">0</span></div>
+    <ul id="testSuiteList"></ul></div>
+<script>
+(function() {
+    // Stuff to display test scores
+    const htmlScoreName = document.getElementById("scoreName");
+    const htmlScoreSkipped = document.getElementById("scoreSkipped");
+    const htmlScoreSuccess = document.getElementById("scoreSuccess");
+    const htmlScoreFailure = document.getElementById("scoreFailure");
+    const htmlScoreError = document.getElementById("scoreError");
+    const htmlScoreElapsed = document.getElementById("scoreElapsed");
+    const pendingScore = {name:"...", skipped:"...", success:"...", failure:"...", error:"...", elapsed:"..."};
+
+    // Updates the HTML display from the scrores
+    const updateScore = function(score,name) {
+        htmlScoreName.innerHTML = name || score.name || "?";
+        htmlScoreSkipped.innerHTML = score.skipped || 0;
+        htmlScoreSuccess.innerHTML = score.success|| 0;
+        htmlScoreFailure.innerHTML = score.failure || 0;
+        htmlScoreError.innerHTML = score.error || 0;
+        htmlScoreElapsed.innerHTML = score.elapsed || 0;
+    };
+
+    // Runs asynchronously
+    const asynch = function(f){setTimeout(f,0)};
+
+    const sudoku = Module("sudoku");
+    const test = Module("test");
+
+    //enumerate tests and generate html button to invoke it
+    let suiteNum = 0;
+    const allCasesSuite = new test.TestSuite({name: "All cases"});
+    const htmlTestSuiteList = document.getElementById("testSuiteList");
+    for (let suiteKey in sudoku) {
+        const testSuite = sudoku[suiteKey];
+        if (testSuite instanceof test.TestSuite) {
+            suiteNum++;
+            // Generate html list item for the test suite
+            const htmlTestSuiteItem = document.createElement("li");
+            htmlTestSuiteList.appendChild(htmlTestSuiteItem);
+
+            // Generate html button for the test suite
+            const htmlTestSuiteButton = document.createElement("button");
+            htmlTestSuiteItem.appendChild(htmlTestSuiteButton);
+            htmlTestSuiteButton.onclick = function () {
+                updateScore(pendingScore, testSuite._options.name + " running...");
+                asynch(function(){updateScore(testSuite.runTests())});
+            };
+            htmlTestSuiteButton.innerHTML = suiteNum + ": Run suite " + suiteKey;
+
+            // Generate html sub list for test cases in the test suite
+            const htmlTestCaseList = document.createElement("ul");
+            htmlTestSuiteList.appendChild(htmlTestCaseList);
+
+            const testCases = testSuite._tests;
+            let caseNum = 0;
+            for (let caseKey in testCases) {
+                const testCase = testCases[caseKey];
+                if (testCase instanceof test.TestCase) {
+                    caseNum++;
+                    allCasesSuite.addTest(testCase);
+                    // Generate html list item for the test case
+                    const htmlTestCaseItem = document.createElement("li");
+                    htmlTestCaseList.appendChild(htmlTestCaseItem);
+
+                    // Generate html button for the test case
+                    const htmlTestCaseButton = document.createElement("button");
+                    htmlTestCaseItem.appendChild(htmlTestCaseButton);
+                    htmlTestCaseButton.onclick = function () {
+                        updateScore(pendingScore, testCase._options.name + " running...");
+                        asynch(function(){updateScore(testCase.runTest({force: true}))});
+                    };
+                    htmlTestCaseButton.innerHTML = suiteNum + "." + caseNum + ": Run case " + testCase._options.name;
+                }
+            }
+        }
+    }
+    // All test cases
+    if (allCasesSuite._tests.length > 0) {
+        // Generate html list item to for the all test together
+        const htmlAllCasesItem = document.createElement("li");
+        htmlTestSuiteList.appendChild(htmlAllCasesItem);
+
+        // Generate html button for the test suite
+        const htmlAllCasesButton = document.createElement("button");
+        htmlAllCasesButton.innerHTML = "Run suite with all " + allCasesSuite._tests.length + " cases";
+        htmlAllCasesButton.onclick = function () {
+            updateScore(pendingScore, allCasesSuite._options.name + " running...");
+            asynch(function(){updateScore(allCasesSuite.runTests({force: htmlAllCasesForceCheckbox.checked}))});
+        };
+        htmlAllCasesItem.appendChild(htmlAllCasesButton);
+
+//        const htmlAllCasesForceLabel = document.createElement("label");
+//        htmlAllCasesForceLabel.innerHTML = "force";
+//        htmlAllCasesItem.appendChild(htmlAllCasesForceLabel);
+
+        const htmlAllCasesForceCheckbox = document.createElement("input");
+        htmlAllCasesForceCheckbox.type = "checkbox";
+        htmlAllCasesForceCheckbox.value = "force";
+        htmlAllCasesItem.appendChild(htmlAllCasesForceCheckbox);
+
+        const htmlAllCasesForceText = document.createTextNode("force");
+        htmlAllCasesItem.appendChild(htmlAllCasesForceText);
+    }
+}());
+</script>
+<!--Panel of logger controls -->
+<b>Loggers</b>
+<div id=loggers"><ul id="loggersList"></ul></div>
+<script>
+(function(){
+    const muteNoisyLogging = function () {
+                console.warn("Turning trace+debug+info logging off.");
+                Logger.setAllTrace(false);
+                Logger.setAllDebug(false);
+                Logger.setAllInfo(false);
+            };
+    // Preemptively turn low level loggeing off for performance
+    muteNoisyLogging();
+
+    const loggerNames = [];
+    for (let loggerName in Logger._instances) loggerNames.push(loggerName);
+    loggerNames.sort();
+    const htmlLoggersList = document.getElementById("loggersList");
+    var loggerNum = 0;
+    for (let k in loggerNames)
+    {
+        const loggerName = loggerNames[k];
+        const logger = Logger._instances[loggerName];
+        loggerNum++;
+        // Generate html list item for the logger
+        const htmlLoggerItem = document.createElement("li");
+        htmlLoggersList.appendChild(htmlLoggerItem);
+
+        // Generate html button for the test case
+        const htmlLoggerNameSpan = document.createElement("span");
+        htmlLoggerNameSpan.innerHTML = logger._name + ": ";
+        htmlLoggerNameSpan.style.cssText = "display: inline-block; width: 250px; ";
+        htmlLoggerItem.appendChild(htmlLoggerNameSpan);
+//        htmlLoggerNameSpan.style = ;
+
+        const htmlTraceCheckbox = document.createElement("input");
+        htmlTraceCheckbox.type = "checkbox";
+        htmlTraceCheckbox.value = "trace";
+        htmlTraceCheckbox.checked = logger._isTraceOn;
+        htmlTraceCheckbox.onclick = function(){logger._isTraceOn = htmlTraceCheckbox.checked};
+        htmlLoggerItem.appendChild(htmlTraceCheckbox);
+        const htmlTraceText = document.createTextNode("trace");
+        htmlLoggerItem.appendChild(htmlTraceText);
+
+        const htmlDebugCheckbox = document.createElement("input");
+        htmlDebugCheckbox.type = "checkbox";
+        htmlDebugCheckbox.value = "debug";
+        htmlDebugCheckbox.checked = logger._isDebugOn;
+        htmlDebugCheckbox.onclick = function(){logger._isDebugOn = htmlDebugCheckbox.checked};
+        htmlLoggerItem.appendChild(htmlDebugCheckbox);
+        const htmlDebugText = document.createTextNode("debug");
+        htmlLoggerItem.appendChild(htmlDebugText);
+
+        const htmlInfoCheckbox = document.createElement("input");
+        htmlInfoCheckbox.type = "checkbox";
+        htmlInfoCheckbox.value = "info";
+        htmlInfoCheckbox.checked = logger._isInfoOn;
+        htmlInfoCheckbox.onclick = function(){logger._isInfoOn = htmlInfoCheckbox.checked};
+        htmlLoggerItem.appendChild(htmlInfoCheckbox);
+        const htmlInfoText = document.createTextNode("info");
+        htmlLoggerItem.appendChild(htmlInfoText);
+    }
+
+    // Button to turn all off or on
+    if (true) {
+        // Generate html list item to for the all test together
+        const htmlAllOffItem = document.createElement("li");
+        htmlLoggersList.appendChild(htmlAllOffItem);
+
+        // Generate html button for the test suite
+        const htmlAllOffButton = document.createElement("button");
+        htmlAllOffButton.innerHTML = "All off";
+        htmlAllOffButton.onclick = muteNoisyLogging;
+        htmlAllOffItem.appendChild(htmlAllOffButton);
+    }
+}());
+</script><!--Trailer-->
+<div style="text-align: center; border-top: solid 1px black">
+    <a href="../../../../sudoku-ui-web/src/main/web/index.html">Index</a> | <a href="../../test/web/testRunner.html">Test Runner</a> | <a href="../../../../sudoku-ui-web/src/main/web/ui/loggers.html">Loggers</a>
+</div>
+</body>
+</html>

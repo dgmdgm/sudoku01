@@ -1,0 +1,107 @@
+<div ng-controller="GameCtrl">
+    <style>
+        #board table {
+            border: solid 2px black;
+        }
+        .cell {
+            border: solid 1px black;
+            width: 67px;
+            height: 67px;
+        }
+        .cell_wall_left {
+            border-left-width: 2px;
+        }
+        .cell_wall_right {
+            border-right-width: 2px;
+        }
+        .cell_wall_top {
+            border-top-width: 2px;
+        }
+        .cell_wall_bottom {
+            border-bottom-width: 2px;
+        }
+        .cell_tone0 {
+            background-color: rgb(255,249,249);
+        }
+        .cell_tone1 {
+            background-color: rgb(255,252,252);;
+        }
+        .cellcandidates {
+            height: 12px;
+            vertical-align: top;
+            text-align: center ;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 70%;
+            color: gray;
+            /*position: absolute;*/
+        }
+        .center {
+            /*margin: auto;*/
+            text-align: center;
+            /*width: 90%;*/
+        }
+        .celldigit {
+            background-color: inherit;
+            width: 2ch;
+            height: 40px;
+            /*border: dotted 1px;*/
+            border: none;
+            font-size: 30px;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            /*size: 30px;*/
+            /*position: absolute;*/
+        }
+    </style>
+
+    <div id="board">
+        <table>
+            <tr ng-repeat="uiRow in uiRows">
+                <td ng-repeat="uiCol in uiCols"
+                    ng-class="{cell: true, cell_wall_left: uiCol===3 || uiCol===6, cell_wall_right: uiCol===2 || uiCol===5, cell_wall_top: uiRow===3 || uiRow===6, cell_wall_bottom: uiRow===2 || uiRow===5, cell_tone1: (Math.floor(uiRow/3)+ Math.floor(uiCol/3)) % 2 === 1, cell_tone0: (Math.floor(uiRow/3)+ Math.floor(uiCol/3)) % 2 === 0}">
+                    <div>
+                        <!--<div ng-show="getUiCell(uiRow,uiCol).uiDigit === ''">-->
+                        <div ng-show="true" class="cellcandidates" >
+                            <span ng-bind-html="getUiCellCandidates(uiRow,uiCol) | sanitize"></span>
+                        </div>
+                        <!--<div ng-show="getUiCell(uiRow,uiCol).uiDigit !== ''">-->
+                        <div ng-show="true" class="center">
+                            <!--{{uiRow}}-{{uiCol}}-->
+                            <!--todo add style class to inddicate hasError-->
+                            <input type="text"  minlength="1" maxlength="1" class="celldigit" select-on-click=""
+                                   ng-model="getUiCell(uiRow,uiCol).uiDigit" ng-change="changeUiDigit(uiRow,uiCol)"/><br/>
+                        </div>
+                        <div class="cellcandidates">
+                            <!--dummy to balance cell content-->
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="gamestate" ng-show="true">
+        <label>Number of solved cells:&nbsp;
+            <span style="font-weight: bold">{{board.getKnownDigitsCount()}} = {{board.getKnownDigitsCount()*100/81}}%</span></label>
+        <br/>
+    </div>
+    <div id="controls" ng-show="true">
+        <label>Initial number of holes:
+            <input type="text" minlength="1" maxlength="2" style="width:3ch; text-align: center" select-on-click="" ng-model="initialNumberOfHoles"/>
+            <input type="range" step="1" min="0" max="81" style="vertical-align:middle" ng-model="initialNumberOfHoles"/>
+        </label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label>Seed: <input type="text" minlength="1" maxlength="4" style="width:5ch; text-align:center" select-on-click="" ng-model="seed"/></label>&nbsp;&nbsp;&nbsp;
+        <button ng-click="populateBoard()" >Populate board</button><br/>
+
+        <button ng-click="refreshUiBoard()" >Refresh UI Board</button> <input type="checkbox" ng-model="autoRefresh"/>Auto<br/>
+        <button ng-click="resetBoard()" >Reset board</button><br/>
+        <button ng-click="undo()" >Undo</button><br/>
+        <button ng-click="giveHint()" >Give a hint</button><br/>
+        <button ng-click="giveCell()" >Give a cell</button><br/>
+        <button ng-click="applySolverScan()" >Apply solver scan</button><br/>
+        <button ng-click="applySolverSearch()" >Apply solver search</button><br/>
+        <button ng-click="applySolverComposite()" >Apply solver composite</button><br/>
+
+    </div>
+
+</div>

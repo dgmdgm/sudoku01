@@ -1,0 +1,127 @@
+Notes on the Sudoku Web UI
+
+------------------------------------------------------------------------------------------------------------------------
+TODO BUGS
+Investigate zero hits steps.
+Separate flags for base candidates.
+- separate bit mask
+- helps UI to identify basic conflicts
+
+
+------------------------------------------------------------------------------------------------------------------------
+TODO Guidelines
+ - Don't spend too much time on the cosmetics.
+
+------------------------------------------------------------------------------------------------------------------------
+TODO Engine
+Consider single object in scope.
+
+
+------------------------------------------------------------------------------------------------------------------------
+TODO UI design
+- May first try to build the ui by directly using the imported classes of the sudoku module.
+- Try make each cell to at least make a call to some function(row,col) and see if that logs as expected.
+- Display a generated board and use a button to advance step by step and see if the display is updated correctly.
+- See if we can put a function call as ng-model="get(row,col)"
+- Display percent complete
+- Add panels with show/hide
+- hamburger manu
+
+Game state
+- modal states, e.g. locking
+- elapsed time clock
+- Conflict highlighting.
+- List of conflict cells.
+- pause for conflicts.
+
+Game Identity
+- name
+- identity by seed.
+- Own random number generator for reproducible games
+- Button for random seed.
+- Define game generation rules based on seed.
+- Seed space vs game space.
+
+
+Game hstory
+- navigation with slider
+- previous+next buttons
+- nagigation mode
+- Progress bar.
+- Micro changes in history.
+  - changes to candidates but not digit
+  - might be useful to support detailed feedback in UI
+
+Game persistence
+- optional color highlight for basic errors
+- optional animation for auto solution
+- give-me-a-hint button
+- optional candidates display
+
+Game creation panel
+- slider + text box for difficulty level 0..81
+- level as value in 0..81 range
+- slider
+- text box
+- seed for repeatable random
+- fun feature to "scramble" the board. i.e. apply a permutation
+  Animate: fade out moved element, fade in new ones
+- User sets a cell by clicking.
+  An iframe appears with the choices. Option: all digits or only real candidates.
+
+- Animated solution
+  Pause to highlight next cell to change.
+  Fade in digit; distinct color for guess
+  Brief message to describe action, possibly in scrolling temp iframe.
+
+TODO UI Style
+- Start using bootstrap css
+
+
+------------------------------------------------------------------------------------------------------------------------
+TODO Project structure
+- Refactor folder structure
+
+TODO Logging
+ - commands to mute all
+ - if(flag) to suppress expensive printing calls
+
+TODO Builds
+- Start with minimal script to copy to web00
+- Proper separate build for sudoku-js module
+- Start using Bower
+
+TODO QA
+- Jslint
+- Jshint
+- test on tablet, phone, Mozilla, ...
+
+------------------------------------------------------------------------------------------------------------------------
+Lessons learned.
+- Prefer UI design choices that are touch friendly.
+  E.g. pick a digit in a pop-up menu instead of keayboard input
+- Keyboard inputs are a drag on device withou keaboards, or even touch doimnated designs.
+- Not trivial to design the UI objects to put in $scope.
+- ng-model objects lifecycle is unclear
+  Change events can come from two sides: user input, internal model events
+- Modes may be needed for global control, e.g. blocking inputs until the user has fixed incorrect choices.
+  The equivalent of a modal pop-up windows may be useful.
+
+
+------------------------------------------------------------------------------------------------------------------------
+TODO ANGULAR
+- Learn about nested controllers and how table cell are handles. It must be a classic problem.
+- Where/how to define classes visible only in app?
+
+About Angular
+- Not an MVC in the same sense as the original one.
+  In the original, input like mouse and keyboard event are handled by the controller.
+  Angular itself handled the mouse keyboard to update its own internal model of the UI.
+  The user defined controller is another layer.
+
+Ideas
+- The MVC like pattern is repeated at many levels.
+- The MVC paradigm is one way of understanding and formalizing three fundamental roles
+  - Maintaining state
+  - Hamdling inputs
+  - Producing outputs.

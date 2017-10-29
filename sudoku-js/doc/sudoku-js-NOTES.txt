@@ -1,0 +1,21 @@
+Notes on the JavsScript version of the Sudoku engine
+
+TODO design
+- See if StateChange is really necessary or it can be replaced with a CellState pointer to its predecessor.
+- Consider having one CellCtrl per ui cell. Then $scope would hold what that cell needs. The problem is how to distinguish them and how to instantiate in the ng-repeat loops. The cell controller has to know which cell to connect to in the service.
+
+TODO Coding
+- JS portability to Mac and mobile
+- Use Jsdoc
+
+TODO Tuning
+- suppress logs
+ - commands to mute all
+ - if(flag) to suppress expensive printing calls
+
+TODO CM
+- clean up git
+
+TODO Build
+- turn into proper webapp for deployment
+

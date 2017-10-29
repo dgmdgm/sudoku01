@@ -1,0 +1,14 @@
+Notes on JavsScript
+
+Optimizations
+-------------
+Shorten access chain using local variables
+Avoid loops with for in or for each
+Reduce loop test
+Work on html fragments instead of live DOM
+Display "thinking" message
+Try to do async thinking.
+
+Portability
+-----------
+TBD

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html ng-app="sudokuApp">
+<head>
+    <meta charset="UTF-8">
+    <title>sudoku01 - Index</title>
+    <!-- load bootstrap and fontawesome via CDN -->
+    <!--TODO Use bootstrap css -->
+    <!--TODO which version-->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+
+    <!--<script src="bower_components/angular/angular.js"></script>-->
+    <!--<script src="bower_components/angular-route/angular-route.js"></script>-->
+
+    <!-- import sudoku-js -->
+    <script src="../../../../sudoku-js/src/main/js/module/Module.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/lang/Exception.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/lang/IllegalArgumentException.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/lang/IllegalStateException.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/lang/IndexOutOfBoundsException.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/lang/NotInstantiableException.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/util/Logger.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/util/Deque.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/util/Set.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/tools/StopWatch.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/sudoku/SudokuConstants.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/sudoku/BoardSanityException.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/sudoku/SudokuHelper.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/sudoku/CellState.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/sudoku/CellChange.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/sudoku/Cell.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/sudoku/SudokuSamples.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/sudoku/SudokuHelper.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/sudoku/SolverStrategyScan.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/sudoku/SolverStrategySearch.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/sudoku/SolverStrategyComposite.js"></script>
+    <script src="../../../../sudoku-js/src/main/js/sudoku/Board.js"></script>
+    <!-- import sudoku-js-test infra -->
+    <script src="../../../../sudoku-js/src/test/js/test/FailedAssertionException.js"></script>
+    <script src="../../../../sudoku-js/src/test/js/test/Assert.js"></script>
+    <script src="../../../../sudoku-js/src/test/js/test/TestCase.js"></script>
+    <script src="../../../../sudoku-js/src/test/js/test/TestSuite.js"></script>
+    <!-- import sudoku-js-test tests -->
+    <script src="../../../../sudoku-js/src/test/js/lang/ExceptionTest.js"></script>
+    <script src="../../../../sudoku-js/src/test/js/sudoku/SudokuHelperTest.js"></script>
+    <script src="../../../../sudoku-js/src/test/js/sudoku/CellStateTest.js"></script>
+    <script src="../../../../sudoku-js/src/test/js/sudoku/CellTest.js"></script>
+    <script src="../../../../sudoku-js/src/test/js/sudoku/SolverStrategyScanTest.js"></script>
+    <script src="../../../../sudoku-js/src/test/js/sudoku/SolverStrategySearchTest.js"></script>
+    <script src="../../../../sudoku-js/src/test/js/sudoku/SolverStrategyCompositeTest.js"></script>
+    <script src="../../../../sudoku-js/src/test/js/sudoku/BoardTest.js"></script>
+
+    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>-->
+    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-route.js"></script>-->
+    <script src="../js/libs/angular-1.5.3/angular.js" ></script>
+    <script src="../js/libs/angular-1.5.3/angular-route.js" ></script>
+    <script src="../js/libs/angular-1.5.3/angular-sanitize.js" ></script>
+
+     <!--sudoku-ui -->
+    <script src="../js/ng/app.js"></script>
+    <script src="../js/ng/appConfig.js"></script>
+    <script src="../js/ng/SanitizeFilter.js"></script>
+    <script src="../js/ng/SelectOnClickDirective.js"></script>
+    <script src="../js/ng/LoggersCtrl.js"></script>
+    <script src="../js/ng/UnitTestsCtrl.js"></script>
+    <script src="../js/ng/WelcomeCtrl.js"></script>
+    <script src="../js/ng/GameCtrl.js"></script>
+</head>
+<body>
+<!--Navigation header-->
+<div style="text-align: center; border-bottom: solid 1px black">
+    <b>sudoku01 - index</b>
+</div>
+<header ng-show="false">
+    <nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Sudoku prototype</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="#/welcome"><i class="fa fa-shield"></i> Welcome</a></li>
+            <li><a href="#/game1"><i class="fa fa-shield"></i> Game View 1</a></li>
+            <li><a href="#/game2"><i class="fa fa-shield"></i> Game View 2</a></li>
+            <li><a href="#/loggers"><i class="fa fa-shield"></i> Loggers</a></li>
+            <li><a href="#/unittests"><i class="fa fa-shield"></i> Unit tests</a></li>
+            <li><a href="#about"><i class="fa fa-shield"></i> About</a></li>
+            <li><a href="#contact"><i class="fa fa-comment"></i> Contact</a></li>
+        </ul>
+    </div>
+    </nav>
+</header>
+
+<!--TODO make header-->
+<div ng-view></div>
+
+<!--Trailer-->
+<nav style="text-align: center; border-top: solid 1px black">
+    <a href="#/welcome" >Welcome</a> | <a href="#/game" >Game</a><br/>
+    <a href="/index.html">Index</a> | <a href="ng/unitTestsView.html">Test Runner</a> | <a href="ng/loggers.html">Loggers</a>
+</nav>
+</body>
+</html>

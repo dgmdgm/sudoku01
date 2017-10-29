@@ -24,11 +24,18 @@
         <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="sudoku" />
+      </profile>
+      <profile default="false" name="Annotation profile for sudokuj" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="sudokuj" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="sudoku" target="1.5" />
+      <module name="sudokuj" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="DependencyValidationManager">
@@ -37,6 +44,9 @@
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
+  </component>
+  <component name="JavaScriptLibraryMappings">
+    <includedPredefinedLibrary name="ECMAScript 6" />
   </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
@@ -59,6 +69,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/sudokuj/pom.xml" />
       </list>
     </option>
   </component>
@@ -187,6 +198,13 @@
       </item>
     </group>
   </component>
+  <component name="ProjectDictionaryState">
+    <dictionary name="dgm">
+      <words>
+        <w>sudoku</w>
+      </words>
+    </dictionary>
+  </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
@@ -199,7 +217,11 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/sudoku.iml" filepath="$PROJECT_DIR$/sudoku.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sudoku-j/sudoku-j.iml" filepath="$PROJECT_DIR$/sudoku-j/sudoku-j.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sudoku-js/sudoku-js.iml" filepath="$PROJECT_DIR$/sudoku-js/sudoku-js.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sudoku-ui-angular/sudoku-ui-angular.iml" filepath="$PROJECT_DIR$/sudoku-ui-angular/sudoku-ui-angular.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sudoku-ui-html5/sudoku-ui-html5.iml" filepath="$PROJECT_DIR$/sudoku-ui-html5/sudoku-ui-html5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sudoku-ui-web/sudoku-ui-web.iml" filepath="$PROJECT_DIR$/sudoku-ui-web/sudoku-ui-web.iml" />
     </modules>
   </component>
   <component name="ProjectReloadState">
