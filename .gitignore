@@ -2,3 +2,5 @@
 target/
 # IntelliJ local config
 *.iws
+# Mac stuff
+.DS_Store
