@@ -38,7 +38,7 @@ sudokuApp.controller('GameCtrl', function ($scope) {
 
     $scope.populateBoard = function() {
         //todo convert to int?
-        sudoku.SudokuHelper.populateBoardRandomly2($scope.board, $scope.initialNumberOfHoles, $scope.seed);
+        sudoku.SudokuHelper.populateBoardRandomly2($scope.board, $scope.initialNumberOfDigits, $scope.seed);
         if ($scope.autoRefresh) $scope.refreshUiBoard();
     };
 
@@ -135,10 +135,25 @@ sudokuApp.controller('GameCtrl', function ($scope) {
         if ($scope.autoRefresh) $scope.refreshUiBoard();
     };
 
+    $scope.undoLastChange = function() {
+        cellChange = $scope.board.undoLastChange();
+        if ($scope.autoRefresh) $scope.refreshUiBoard();
+        console.trace("undoLastChange: cellChange="+cellChange);
+    };
+
+    $scope.giveHint = function() {
+        //todo NOT IMPLEMENTED
+    };
+
+    $scope.giveCell = function() {
+        //todo NOT IMPLEMENTED
+    };
+
+
     //todo finc way to iterate on integers without the need for a collection
     $scope.uiRows = [0,1,2,3,4,5,6,7,8];
     $scope.uiCols = [0,1,2,3,4,5,6,7,8];
-    $scope.initialNumberOfHoles = 27;
+    $scope.initialNumberOfDigits = 42;
     $scope.seed = 0;
     $scope.autoRefresh = true;
     createBoard();

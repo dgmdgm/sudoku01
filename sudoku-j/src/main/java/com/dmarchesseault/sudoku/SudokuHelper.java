@@ -198,7 +198,7 @@ class SudokuHelper implements SudokuConstants
     /**
      * Populates the board with random digits
      *
-     * @param n number of cells.
+     * @param n target number of solved cells.
      */
     //todo Buggy. May fail to fill n cells. Board may be invalid.
     static void populateBoardRandomly1(final Board targetBoard, final int n, final long seed)
@@ -272,9 +272,8 @@ class SudokuHelper implements SudokuConstants
      * Starts with a full board and removes cells.
      * Applies random permutations of rows and columns.
      *
-     * @param n number of cells.
+     * @param n target number of solved cells
      */
-
     static void populateBoardRandomly2(final Board targetBoard, final int n, final long seed)
     {
         if (targetBoard.getKnownDigitsCount() > 0)
@@ -286,7 +285,7 @@ class SudokuHelper implements SudokuConstants
             throw new IllegalArgumentException("Expecting n in 0..81 range");
         }
 
-        //todo Allow controlof the seed, e.g. stored on the board.
+        //todo Allow control of the seed, e.g. stored on the board.
         final Random random = new Random(seed);
 
         //Start from canonical board
@@ -385,13 +384,13 @@ class SudokuHelper implements SudokuConstants
 
 
     /**
-     * Populates the board with random digits
+     * Populates a target board to match a given source board.
      *
      * @param targetBoard target board
-     * @param solvedBoard source board, by assumption a solved board.
-     * @param n number of digits.
+     * @param sourceBoard source board, by assumption a solved board.
+     * @param n target number of solved cells
      */
-    static void populateBoardFromSolution(final Board targetBoard, final Board solvedBoard, final int n)
+    static void populateBoardFromSolution(final Board targetBoard, final Board sourceBoard, final int n)
     {
         if (targetBoard.getKnownDigitsCount() > 0)
         {
@@ -409,7 +408,7 @@ class SudokuHelper implements SudokuConstants
             // Pick random cell index in 0..80 range
             final int cellChoice = (int)(random.nextDouble() * cellChoices.size());
             final int cellIndex = cellChoices.remove(cellChoice);
-            final Cell sourceCell = solvedBoard.getCell(cellIndex);
+            final Cell sourceCell = sourceBoard.getCell(cellIndex);
             final int digit = sourceCell.getCellState().getDigit();
 
             try

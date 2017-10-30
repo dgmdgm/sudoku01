@@ -187,6 +187,13 @@ console && console.log("### Board.js begin");
     };
 
     
+    //int getUnknownDigitsCount()
+    ns.Board.prototype.getUnknownDigitsCount = function()
+    {
+        return 81 - getKnownDigitsCount(false);
+    };
+
+
     //int getKnownDigitsCount()
     ns.Board.prototype.getKnownDigitsCount = function()
     {
@@ -291,7 +298,25 @@ console && console.log("### Board.js begin");
         }
     };
 
-    
+
+    /**
+     * Unwinds the last change in the board history.
+     *
+     * @retu
+     */
+    //CellChange undoLastChange() throws BoardSanityException
+    ns.Board.prototype.undoLastChange = function()
+    {
+        // Undoing changes is tricky
+        // We can pop the last change in the history but that does restore the other cells
+        // What we need is a history not just of cell change but of full board states
+
+        //todo UNSURE IMPLEMENTATION
+        const cellChange = this._history.peekLast();
+        cellChange.getCell().unchange(cellChange);
+        return cellChange;
+    };
+
     /**
      * Performs a sanity check and generates diagnostics.
      *

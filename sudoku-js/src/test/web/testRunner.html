@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Unit Test Runner</title>
+    <!-- Load the tested code-->
     <script src="../../main/js/module/Module.js"></script>
     <script src="../../main/js/lang/Exception.js"></script>
     <script src="../../main/js/lang/IllegalArgumentException.js"></script>
@@ -26,6 +27,7 @@
     <script src="../../main/js/sudoku/SolverStrategyComposite.js"></script>
     <script src="../../main/js/sudoku/Board.js"></script>
 
+    <!-- Load the test cases -->
     <script src="../js/test/FailedAssertionException.js"></script>
     <script src="../js/test/Assert.js"></script>
     <script src="../js/test/TestCase.js"></script>
@@ -43,13 +45,16 @@
 <body>
 <b>Unit tests</b>
 <div id="tests">
+    <!-- hmtl to display test scores -->
     <div><span>Name: </span><span id="scoreName">?</span></div>
     <div><span>Skipped: </span><span id="scoreSkipped">0</span></div>
     <div><span>Success: </span><span id="scoreSuccess">0</span></div>
     <div><span>Failure: </span><span id="scoreFailure">0</span></div>
     <div><span>Error: </span><span id="scoreError">0</span></div>
     <div><span>Elapsed ms: </span><span id="scoreElapsed">0</span></div>
-    <ul id="testSuiteList"></ul></div>
+    <ul id="testSuiteList"></ul>
+</div>
+<!-- todo Should put long test lis in a separate scrollable pane to keep the report visible on top -->
 <script>
 (function() {
     // Stuff to display test scores
@@ -61,7 +66,7 @@
     const htmlScoreElapsed = document.getElementById("scoreElapsed");
     const pendingScore = {name:"...", skipped:"...", success:"...", failure:"...", error:"...", elapsed:"..."};
 
-    // Updates the HTML display from the scrores
+    // Function updating the display from the scores
     const updateScore = function(score,name) {
         htmlScoreName.innerHTML = name || score.name || "?";
         htmlScoreSkipped.innerHTML = score.skipped || 0;
@@ -71,13 +76,13 @@
         htmlScoreElapsed.innerHTML = score.elapsed || 0;
     };
 
-    // Runs asynchronously
+    // Function to run another function asynchronously
     const asynch = function(f){setTimeout(f,0)};
 
     const sudoku = Module("sudoku");
     const test = Module("test");
 
-    //enumerate tests and generate html button to invoke it
+    // For each test, generate an html button to run it
     let suiteNum = 0;
     const allCasesSuite = new test.TestSuite({name: "All cases"});
     const htmlTestSuiteList = document.getElementById("testSuiteList");
@@ -92,6 +97,7 @@
             // Generate html button for the test suite
             const htmlTestSuiteButton = document.createElement("button");
             htmlTestSuiteItem.appendChild(htmlTestSuiteButton);
+            // Button starts an asynchronous test run
             htmlTestSuiteButton.onclick = function () {
                 updateScore(pendingScore, testSuite._options.name + " running...");
                 asynch(function(){updateScore(testSuite.runTests())});

@@ -199,14 +199,27 @@ public class SudokuHelperTest
 
         for (int n : new int[]{9,18,27,36,45,54,63,72,81})
         {
-            final Board board = new Board();
+            final Board targetBoard = new Board();
 
             final StopWatch stopWatch = (new StopWatch()).start();
-            SudokuHelper.populateBoardFromSolution(board, sourceBoard, n);
+            SudokuHelper.populateBoardFromSolution(targetBoard, sourceBoard, n);
             LOG.debug("Test elapsed time: " + stopWatch.stop().elapsed());
-            LOG.debug("Board: \n" + SudokuHelper.printBoardDigits(board));
+            LOG.debug("Board: \n" + SudokuHelper.printBoardDigits(targetBoard));
 
-            Assert.assertEquals(n, board.getKnownDigitsCount());
+            Assert.assertEquals(n, targetBoard.getKnownDigitsCount());
+
+            // Compare digits in source vs target
+            final Cell[] sourceCells = sourceBoard.getCells();
+            final Cell[] targetCells = targetBoard.getCells();
+            for (int k = 0; k < sourceCells.length; k++)
+            {
+                Cell sourceCell = sourceCells[k];
+                Cell targetCell = targetCells[k];
+                if (targetCell.isSingleDigit())
+                {
+                    Assert.assertEquals(sourceCell.getDigit(), targetCell.getDigit());
+                }
+            }
         }
     }
 

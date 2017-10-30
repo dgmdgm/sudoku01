@@ -86,16 +86,16 @@
         <br/>
     </div>
     <div id="controls" ng-show="true">
-        <label>Initial number of holes:
-            <input type="text" minlength="1" maxlength="2" style="width:3ch; text-align: center" select-on-click="" ng-model="initialNumberOfHoles"/>
-            <input type="range" step="1" min="0" max="81" style="vertical-align:middle" ng-model="initialNumberOfHoles"/>
+        <label>Initial number of digits:
+            <input type="text" minlength="1" maxlength="2" style="width:3ch; text-align: center" select-on-click="" ng-model="initialNumberOfDigits"/>
+            <input type="range" step="1" min="0" max="81" style="vertical-align:middle" ng-model="initialNumberOfDigits"/>
         </label>&nbsp;&nbsp;&nbsp;&nbsp;
         <label>Seed: <input type="text" minlength="1" maxlength="4" style="width:5ch; text-align:center" select-on-click="" ng-model="seed"/></label>&nbsp;&nbsp;&nbsp;
         <button ng-click="populateBoard()" >Populate board</button><br/>
 
         <button ng-click="refreshUiBoard()" >Refresh UI Board</button> <input type="checkbox" ng-model="autoRefresh"/>Auto<br/>
         <button ng-click="resetBoard()" >Reset board</button><br/>
-        <button ng-click="undo()" >Undo</button><br/>
+        <button ng-click="undoLastChange()" >Undo</button><br/>
         <button ng-click="giveHint()" >Give a hint</button><br/>
         <button ng-click="giveCell()" >Give a cell</button><br/>
         <button ng-click="applySolverScan()" >Apply solver scan</button><br/>

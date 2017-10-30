@@ -186,15 +186,29 @@ console && console.log("### ns.SudokuHelperTest.js begin");
         for (let k in nums)
         {
             const n = nums[k];
-            const board = new ns.Board();
+            const targetBoard = new ns.Board();
 
             const stopWatch = (new tools.StopWatch()).start();
-            ns.SudokuHelper.populateBoardFromSolution(board, sourceBoard, n);
+            ns.SudokuHelper.populateBoardFromSolution(targetBoard, sourceBoard, n);
             LOG.debug("Test elapsed time: " + stopWatch.stop().elapsed());
-            if (LOG._isTraceOn) LOG.trace("Board: \n" + ns.SudokuHelper.printBoardDigits(board));
+            if (LOG._isTraceOn) LOG.trace("Board: \n" + ns.SudokuHelper.printBoardDigits(targetBoard));
 
-            test.Assert.assertEquals(n, board.getKnownDigitsCount());
+            test.Assert.assertEquals(n, targetBoard.getKnownDigitsCount());
+
+            // Compare digits in source vs target
+            const sourceCells = sourceBoard.getCells();
+            const targetCells = targetBoard.getCells();
+            for (let k = 0; k < sourceCells.length; k++)
+            {
+                sourceCell = sourceCells[k];
+                targetCell = targetCells[k];
+                if (targetCell.isSingleDigit())
+                {
+                    test.Assert.assertEquals(sourceCell.getDigit(), targetCell.getDigit());
+                }
+            }
         }
+
     }));
 
 

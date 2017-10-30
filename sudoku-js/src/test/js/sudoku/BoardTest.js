@@ -84,6 +84,49 @@ console && console.log("### ns.BoardTest.js begin");
         }
     }));
 
+
+    //@Test
+    //public void test_undoLastChange() throws BoardSanityException
+    ns.boardTestSuite.addTest(new test.TestCase({name: "test_undoLastChange", active: true}, function(){
+
+        // Source board is a fixed reference
+        const sourceBoard = new ns.Board();
+        ns.SudokuHelper.populateBoardFromText(sourceBoard, ns.SudokuSamples.SUDOKU_BOARD_SAMPLE_01);
+        const sourceKnownDigitsCount = sourceBoard.getKnownDigitsCount();
+
+        // Make sure the number of changes in the history will be large enough to be meaningful, say at least 10
+        test.Assert.assertTrue("Should have a longer history to play with",  81-sourceKnownDigitsCount > 10);
+
+        // Target board is initially identical
+        const targetBoard = new ns.Board();
+        ns.SudokuHelper.populateBoardFromText(targetBoard, ns.SudokuSamples.SUDOKU_BOARD_SAMPLE_01);
+
+        // Solve target board to have a history to play with
+        LOG.debug("Target board before solving");
+        LOG.debug(ns.SudokuHelper.printBoardDigits(targetBoard, '.'));
+        const solverStrategy = new ns.SolverStrategyComposite();
+        solverStrategy.apply(targetBoard);
+        LOG.debug("Target board after solving");
+        LOG.debug(ns.SudokuHelper.printBoardDigits(targetBoard, '.'));
+
+        let targetKnownDigitsCount = targetBoard.getKnownDigitsCount();
+        test.Assert.assertEquals("target board should be fully solved", 81, targetKnownDigitsCount);
+
+        // Unwind solution history
+
+        while(targetKnownDigitsCount  > sourceKnownDigitsCount)
+        {
+            let cellChange = targetBoard.undoLastChange();
+            test.Assert.assertNotEquals("Should unwind only changes from solving history", ns.CellChange.Reason.INIT, cellChange.getReason());
+            if (cellChange.getCellStateAfter().isSingleDigit())
+            {
+                targetKnownDigitsCount--;
+                test.Assert.assertEquals("known digits count should decrement", targetKnownDigitsCount, targetBoard.getKnownDigitsCount());
+            }
+        }
+    }));
+
+
 }(Module("sudoku"),Module("test"),Module("util"),Module("lang")));
 
 console && console.log("### ns.BoardTest.js end");

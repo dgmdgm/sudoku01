@@ -304,6 +304,13 @@ console && console.log("### SudokuHelper.js begin");
     };
 
 
+    /**
+     * Populates the board with random digits.
+     * Starts with a full board and removes cells.
+     * Applies random permutations of rows and columns.
+     *
+     * @param n target number of solved cells
+     */
     //static void populateBoardRandomly2(final Board targetBoard, final int n)
     ns.SudokuHelper.populateBoardRandomly2 = function(targetBoard, n, seed)
     {
@@ -317,7 +324,7 @@ console && console.log("### SudokuHelper.js begin");
         }
         if (seed != null) seed = Date.now();
 
-        //todo Allow controlof the seed, e.g. stored on the board.
+        //todo Allow control of the seed, e.g. stored on the board.
         //Start from canonical board
         const sourceBoard = new ns.Board();
         try
@@ -413,14 +420,14 @@ console && console.log("### SudokuHelper.js begin");
 
 
     /**
-     * Populates the board with random digits
+     * Populates a target board to match a given source board.
      *
      * @param targetBoard target board
-     * @param solvedBoard source board, by assumption a solved board.
-     * @param n number of digits.
+     * @param sourceBoard source board, by assumption a solved board.
+     * @param n target number of solved cells to retain
      */
     //static void populateBoardFromSolution(final Board targetBoard, final Board solvedBoard, final int n)
-    ns.SudokuHelper.populateBoardFromSolution = function(targetBoard, solvedBoard, n)
+    ns.SudokuHelper.populateBoardFromSolution = function(targetBoard, sourceBoard, n)
     {
         if (targetBoard.getKnownDigitsCount() > 0)
         {
@@ -438,7 +445,7 @@ console && console.log("### SudokuHelper.js begin");
             // Pick random cell index in 0..80 range
             const cellChoice = Math.floor(random() * cellChoices.length);
             const cellIndex = cellChoices.splice(cellChoice,1);
-            const sourceCell = solvedBoard.getCell(cellIndex);
+            const sourceCell = sourceBoard.getCell(cellIndex);
             const digit = sourceCell.getCellState().getDigit();
 
             try

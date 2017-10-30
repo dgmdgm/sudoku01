@@ -158,6 +158,12 @@ class Board implements SudokuConstants
         return _history;
     }
 
+    int getUnknownDigitsCount()
+    {
+        return 81 - getKnownDigitsCount(false);
+    }
+
+
     int getKnownDigitsCount()
     {
         return getKnownDigitsCount(false);
@@ -251,6 +257,24 @@ class Board implements SudokuConstants
             }
         }
 
+    }
+
+    /**
+     * Unwinds the last change in the board history.
+     *
+     * @retu
+     */
+    CellChange undoLastChange() throws BoardSanityException
+    {
+
+        // Undoing changes is tricky
+        // We can pop the last change in the history but that does restore the other cells
+        // What we need is a history not just of cell change but of full board states
+
+        //todo UNSURE IMPLEMENTATION
+        CellChange cellChange = _history.peekLast();
+        cellChange.getCell().unchange(cellChange);
+        return cellChange;
     }
 
     /**
