@@ -416,8 +416,8 @@ public class SudokuHelperTest
     public void test_makeRowPermutation_2()
     {
         // It is possible that the permutation will be the identity one. There is a chance in 9!.
-        // A testBoard that check that the permutation is never identity could eventually fail.
-        // A less risky testBoard is to check that 3 consecutive permutations are not equal.
+        // A test that checks that the permutation is never identity could eventually fail.
+        // A less risky test is to check that 3 consecutive permutations are not equal.
 
         // Create n permutations
         final int n = 3;

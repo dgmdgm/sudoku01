@@ -1,2 +1,4 @@
+# Maven build output
 target/
-sudoku.iws
+# IntelliJ local config
+*.iws
