@@ -4,6 +4,7 @@ import com.dmarchesseault.tools.StopWatch;
 import javafx.util.Pair;
 import junit.framework.Assert;
 import org.apache.log4j.Logger;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.*;
@@ -318,7 +319,7 @@ public class SudokuHelperTest
         }
     }
 
-    @Test
+    @Ignore
     public void test_findPermutation_new_boards() throws BoardSanityException
     {
         // For fun, see if we can find transforms between our known boards
